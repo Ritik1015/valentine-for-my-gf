@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Proposal 💜</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  height:100vh;
+  font-family:'Poppins',sans-serif;
+  background:
+    linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
+    url("https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e");
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  color:white;
+}
+
+/* Proposal Card */
+.card{
+  background:rgba(156,89,209,0.92);
+  padding:26px;
+  border-radius:22px;
+  width:340px;
+  text-align:center;
+  box-shadow:0 10px 35px rgba(0,0,0,0.5);
+  transition:opacity 0.4s ease;
+  z-index:10;
+}
+.card.fade{opacity:0;}
+
+.card img{
+  width:100%;
+  border-radius:18px;
+  margin:15px 0;
+}
+
+h1{
+  font-size:22px;
+  margin:6px 0;
+}
+
+p{
+  font-size:15px;
+  margin:6px 0;
+}
+
+.from{
+  font-size:13px;
+  opacity:0.85;
+  letter-spacing:1px;
+}
+
+/* Buttons */
+button{
+  padding:10px 26px;
+  border:none;
+  border-radius:30px;
+  font-size:16px;
+  margin:10px 6px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+#yesBtn{
+  background:#ff4f81;
+  color:white;
+}
+#noBtn{
+  background:white;
+  color:#9c59d1;
+}
+
+#noBtn:disabled{
+  background:#ccc;
+  color:#666;
+  cursor:not-allowed;
+}
+
+/* Second Page */
+.next{
+  display:none;
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
+    url("https://images.unsplash.com/photo-1517841905240-472988babdf9");
+  background-size:cover;
+  background-position:center;
+  justify-content:center;
+  align-items:center;
+}
+
+.next.show{
+  display:flex;
+}
+
+.next-box{
+  background:rgba(255,105,180,0.88);
+  padding:28px;
+  border-radius:22px;
+  max-width:350px;
+  text-align:center;
+}
+
+/* Hearts */
+.heart{
+  position:absolute;
+  font-size:18px;
+  animation:float 4s linear forwards;
+  pointer-events:none;
+}
+
+@keyframes float{
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-120vh);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- FIRST PAGE -->
+<div class="card" id="card">
+  <h1>Hey 💜</h1>
+
+  <p><b>Bhavya 💜</b></p>
+  <p class="from">From Dudu 💞</p>
+
+  <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e" alt="proposal">
+
+  <p>Will you be my Valentine? 💍</p>
+
+  <button id="yesBtn">Yes 💖</button>
+  <button id="noBtn">No 🙈</button>
+</div>
+
+<!-- SECOND PAGE -->
+<div class="next" id="next">
+  <div class="next-box">
+    <h2>Yayyy 💞</h2>
+    <p>
+      Tum meri zindagi ka sabse khoobsurat hissa ho ❤️<br><br>
+      <b>Mai hmare relation ko bhot zyada beautiful bnana chahta hu</b> 🥹💜
+    </p>
+  </div>
+</div>
+
+<!-- SONG -->
+<audio id="song" preload="auto">
+  <source src="https://raw.githubusercontent.com/Ritik1015/valentine-song/main/Tu%20Hi%20Hai%20Aashiqui-Downringtone.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const card=document.getElementById("card");
+const next=document.getElementById("next");
+const song=document.getElementById("song");
+
+/* YES */
+yesBtn.onclick=()=>{
+  song.play().catch(()=>{});
+  card.classList.add("fade");
+  hearts();
+  setTimeout(()=>{
+    card.style.display="none";
+    next.classList.add("show");
+  },400);
+};
+
+/* NO button logic */
+let count=0;
+noBtn.onclick=()=>{
+  count++;
+  if(count===1) noBtn.innerText="Are you sure?";
+  else if(count===2) noBtn.innerText="Think again!";
+  else if(count===3){
+    noBtn.innerText="Nope!!";
+    noBtn.disabled=true;
+  }
+};
+
+/* Dodge */
+noBtn.onmouseenter=()=>{
+  if(noBtn.disabled) return;
+  const x=Math.random()*120-60;
+  const y=Math.random()*120-60;
+  noBtn.style.transform=`translate(${x}px,${y}px)`;
+};
+
+/* Hearts effect */
+function hearts(){
+  for(let i=0;i<14;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerText="💖";
+    h.style.left=Math.random()*100+"vw";
+    h.style.bottom="0";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+  }
+}
+</script>
+
+</body>
+</html>
