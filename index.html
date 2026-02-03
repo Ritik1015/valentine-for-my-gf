@@ -19,6 +19,14 @@ body {
   position: relative;
 }
 
+.overlay {
+  position: absolute;
+  top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.5);
+  display:flex; justify-content:center; align-items:center;
+  color:#fff; font-size:24px; text-align:center; cursor:pointer; z-index:20;
+}
+
 .card {
   background: rgba(142,76,160,0.9);
   border-radius: 20px;
@@ -101,6 +109,8 @@ p { font-size: 16px; margin: 10px 0 20px; }
 </head>
 <body>
 
+<div class="overlay" id="overlay">Click anywhere to start your Valentine surprise 💖</div>
+
 <div class="card" id="mainCard">
   <h1>Bhavya 💜</h1>
   <h2>Will you be my Valentine?</h2>
@@ -116,14 +126,14 @@ p { font-size: 16px; margin: 10px 0 20px; }
   <p>Har din tumhare saath ek nayi khushi hai… ❤️</p>
 </div>
 
-<!-- Audio with cache-busting -->
-<audio id="loveMusic" preload="auto">
+<audio id="loveMusic" preload="auto" loop>
   <source src="https://anytourl.com/s/78758128207718960?v=<?=Date.now()?>" type="audio/mpeg">
 </audio>
 
 <img src="https://c.tenor.com/YN5nD8oCPZ4AAAAC/dancing-cat.gif" class="dancing-cat" id="dancingCat" style="display:none;">
 
 <script>
+const overlay = document.getElementById('overlay');
 const yesBtn = document.getElementById('yesBtn');
 const noBtn = document.getElementById('noBtn');
 const card = document.getElementById('mainCard');
@@ -131,18 +141,19 @@ const nextPage = document.getElementById('nextPage');
 const music = document.getElementById('loveMusic');
 const dancingCat = document.getElementById('dancingCat');
 
-// Fade-in and fade-out song
-function fadeInAudio(audio, duration=2000){
-  audio.volume = 0;
-  audio.play().catch(()=>console.log("Click again to start song"));
+overlay.addEventListener('click', () => {
+  overlay.style.display = 'none';
+  // Start music with fade in
+  music.volume = 0;
+  music.play().catch(()=>console.log("Click again to start music"));
   let step = 0.05;
-  let interval = duration*step;
-  let fade = setInterval(() => {
-    if(audio.volume < 1) audio.volume = Math.min(audio.volume + step,1);
-    else clearInterval(fade);
-  }, interval);
-}
+  let fadeIn = setInterval(()=>{
+    if(music.volume < 1) music.volume = Math.min(music.volume + step, 1);
+    else clearInterval(fadeIn);
+  },100);
+});
 
+// Fade out music after cinematic 20s (YES click)
 function fadeOutAudio(audio, duration=2000){
   let step = 0.05;
   let interval = duration*step;
@@ -153,7 +164,6 @@ function fadeOutAudio(audio, duration=2000){
 }
 
 yesBtn.addEventListener('click', () => {
-  fadeInAudio(music,2000);
   card.classList.add('fade');
   dancingCat.style.display = 'block';
   createHearts();
@@ -161,7 +171,6 @@ yesBtn.addEventListener('click', () => {
   createFlyingHearts();
   createTwinkleHearts();
 
-  // Fade out after 20 seconds
   setTimeout(()=>{fadeOutAudio(music,3000);},20000);
 
   setTimeout(() => {
@@ -170,7 +179,6 @@ yesBtn.addEventListener('click', () => {
   }, 500);
 });
 
-// NO button logic
 let noClickCount = 0;
 noBtn.addEventListener('click', () => {
   noClickCount++;
