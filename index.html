@@ -5,105 +5,104 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Valentine Surprise</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-  body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    height: 100vh;
-    overflow: hidden;
-    background: url('4c2fe3f2-3420-4ce9-90cc-a61c2804e75b.png') center/cover no-repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: url('4c2fe3f2-3420-4ce9-90cc-a61c2804e75b.png') center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
 
-  .card {
-    background: rgba(142,76,160,0.9);
-    border-radius: 20px;
-    padding: 30px 20px;
-    text-align: center;
-    width: 350px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    color: #fff;
-    transition: opacity 0.5s ease;
-    z-index: 10;
-  }
+.card {
+  background: rgba(142,76,160,0.9);
+  border-radius: 20px;
+  padding: 30px 20px;
+  text-align: center;
+  width: 350px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  color: #fff;
+  transition: opacity 0.5s ease;
+  z-index: 10;
+}
 
-  .fade { opacity: 0; }
+.fade { opacity: 0; }
 
-  .card img {
-    width: 100%;
-    border-radius: 15px;
-    margin: 15px 0;
-  }
+.card img {
+  width: 100%;
+  border-radius: 15px;
+  margin: 15px 0;
+}
 
-  h1 { font-size: 22px; margin-bottom: 10px; }
-  h2 { font-size: 20px; }
-  p { font-size: 16px; margin: 10px 0 20px; }
+h1 { font-size: 22px; margin-bottom: 10px; }
+h2 { font-size: 20px; }
+p { font-size: 16px; margin: 10px 0 20px; }
 
-  .btn {
-    padding: 10px 25px;
-    border-radius: 30px;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 5px;
-    transition: all 0.3s ease;
-    position: relative;
-  }
+.btn {
+  padding: 10px 25px;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 5px;
+  transition: all 0.3s ease;
+  position: relative;
+}
 
-  .btn-yes { background: #ff6584; color: #fff; }
-  .btn-no { background: #fff; color: #8e4ca0; }
-  .btn:disabled { background: #ccc; cursor: not-allowed; }
+.btn-yes { background: #ff6584; color: #fff; }
+.btn-no { background: #fff; color: #8e4ca0; }
+.btn:disabled { background: #ccc; cursor: not-allowed; }
 
-  .next-page {
-    display: none;
-    text-align: center;
-    color: #ffb6c1; 
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: 10;
-    background: rgba(142,76,160,0.8);
-    padding: 40px;
-    border-radius: 20px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 350px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  }
-  .next-page.show { display: block; opacity: 1; }
-  .next-page h2 { font-size: 26px; margin-bottom: 15px; color: #ff69b4; }
-  .next-page p { font-size: 18px; margin: 10px 0; color: #ffe4e1; }
+/* Next page style with romantic gradient background */
+.next-page {
+  display: none;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 10;
+  background: linear-gradient(135deg, rgba(142,76,160,0.9), rgba(255,105,180,0.9));
+  padding: 40px;
+  border-radius: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+.next-page.show { display: block; opacity: 1; }
+.next-page h2 { font-size: 26px; margin-bottom: 15px; color: #ffe4e1; }
+.next-page p { font-size: 18px; margin: 10px 0; color: #ffe4e1; }
 
-  .dancing-cat {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 120px;
-    animation: bounce 1s infinite alternate ease-in-out;
-  }
-  @keyframes bounce { from { transform: translate(-50%, 0); } to { transform: translate(-50%, -15px); } }
+.dancing-cat {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  animation: bounce 1s infinite alternate ease-in-out;
+}
+@keyframes bounce { from { transform: translate(-50%, 0); } to { transform: translate(-50%, -15px); } }
 
-  .heart { position: absolute; width: 20px; height: 20px; background: red; transform: rotate(-45deg); animation: float 4s linear infinite; pointer-events: none; z-index: 1; }
-  .heart::before, .heart::after { content: ''; position: absolute; width: 20px; height: 20px; background: red; border-radius: 50%; }
-  .heart::before { top: -10px; left: 0; }
-  .heart::after { left: 10px; top: 0; }
-  @keyframes float { 0% { opacity:1; } 100% { transform: translate(-50vw, -100vh) rotate(-45deg); opacity:0; } }
+.heart { position: absolute; width: 20px; height: 20px; background: red; transform: rotate(-45deg); animation: float 4s linear infinite; pointer-events: none; z-index: 1; }
+.heart::before, .heart::after { content: ''; position: absolute; width: 20px; height: 20px; background: red; border-radius: 50%; }
+.heart::before { top: -10px; left: 0; }
+.heart::after { left: 10px; top: 0; }
+@keyframes float { 0% { opacity:1; } 100% { transform: translate(-50vw, -100vh) rotate(-45deg); opacity:0; } }
 
-  .confetti { position: absolute; width: 10px; height: 10px; opacity: 0.9; pointer-events: none; animation: confetti-fall 3s linear forwards; border-radius: 50%; }
-  @keyframes confetti-fall { 100% { transform: translateY(100vh) rotate(360deg); opacity:0; } }
+.confetti { position: absolute; width: 10px; height: 10px; opacity: 0.9; pointer-events: none; animation: confetti-fall 3s linear forwards; border-radius: 50%; }
+@keyframes confetti-fall { 100% { transform: translateY(100vh) rotate(360deg); opacity:0; } }
 
-  .flying-heart { position: absolute; font-size: 20px; animation: fly 1.5s ease-out forwards; pointer-events: none; z-index: 5; }
-  @keyframes fly { 100% { opacity:0; transform: translateY(-150px) scale(1.5); } }
+.flying-heart { position: absolute; font-size: 20px; animation: fly 1.5s ease-out forwards; pointer-events: none; z-index: 5; }
+@keyframes fly { 100% { opacity:0; transform: translateY(-150px) scale(1.5); } }
 
-  .twinkle-heart { position: absolute; font-size: 15px; color: pink; animation: twinkle 2s infinite; pointer-events: none; }
-  @keyframes twinkle { 0%,100% { opacity:0.2; } 50% { opacity:1; } }
-
+.twinkle-heart { position: absolute; font-size: 15px; color: pink; animation: twinkle 2s infinite; pointer-events: none; }
+@keyframes twinkle { 0%,100% { opacity:0.2; } 50% { opacity:1; } }
 </style>
 </head>
 <body>
@@ -123,7 +122,7 @@
   <p>Har din tumhare saath ek nayi khushi hai… ❤️</p>
 </div>
 
-<!-- 🎧 Romantic Song Audio -->
+<!-- Romantic Song Audio -->
 <audio id="loveMusic" preload="auto">
   <source src="https://anytourl.com/s/78758128207718960" type="audio/mpeg">
 </audio>
@@ -138,9 +137,20 @@ const nextPage = document.getElementById('nextPage');
 const music = document.getElementById('loveMusic');
 const dancingCat = document.getElementById('dancingCat');
 
+// Smooth volume fade-in
+function fadeInAudio(audio, duration=2000){
+  audio.volume = 0;
+  let step = 0.05;
+  let interval = duration * step / 1;
+  audio.play().catch(()=>console.log("Autoplay blocked, click again"));
+  let fade = setInterval(() => {
+    if(audio.volume < 1) audio.volume = Math.min(audio.volume + step,1);
+    else clearInterval(fade);
+  }, interval);
+}
+
 yesBtn.addEventListener('click', () => {
-  music.currentTime = 0;   // start from beginning
-  music.play();            // instantly play romantic song
+  fadeInAudio(music, 2000); // fade in 2s
   card.classList.add('fade');
   dancingCat.style.display = 'block';
   createHearts();
@@ -151,7 +161,6 @@ yesBtn.addEventListener('click', () => {
   setTimeout(() => {
     card.style.display = 'none';
     nextPage.classList.add('show');
-    createHearts(); 
   }, 500);
 });
 
@@ -170,54 +179,11 @@ noBtn.addEventListener('mouseenter', () => {
   }
 });
 
-function createHearts(){
-  for(let i=0;i<20;i++){
-    const heart=document.createElement('div');
-    heart.classList.add('heart');
-    heart.style.left=Math.random()*100+'vw';
-    heart.style.animationDuration=(3+Math.random()*3)+'s';
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),6000);
-  }
-  setInterval(()=>createHearts(),1500);
-}
-
-function createConfetti(){
-  for(let i=0;i<50;i++){
-    const conf=document.createElement('div');
-    conf.classList.add('confetti');
-    conf.style.left=Math.random()*window.innerWidth+'px';
-    conf.style.background=`hsl(${Math.random()*360},100%,50%)`;
-    conf.style.animationDuration=(2+Math.random()*2)+'s';
-    document.body.appendChild(conf);
-    setTimeout(()=>conf.remove(),4000);
-  }
-}
-
-function createFlyingHearts(){
-  for(let i=0;i<15;i++){
-    const fh=document.createElement('div');
-    fh.classList.add('flying-heart');
-    fh.style.left=yesBtn.offsetLeft+yesBtn.offsetWidth/2+'px';
-    fh.style.top=yesBtn.offsetTop+'px';
-    fh.textContent="💖";
-    document.body.appendChild(fh);
-    setTimeout(()=>fh.remove(),1500);
-  }
-}
-
-function createTwinkleHearts(){
-  for(let i=0;i<30;i++){
-    const th=document.createElement('div');
-    th.classList.add('twinkle-heart');
-    th.style.left=Math.random()*window.innerWidth+'px';
-    th.style.top=Math.random()*window.innerHeight+'px';
-    th.style.fontSize=(10+Math.random()*20)+'px';
-    document.body.appendChild(th);
-    setTimeout(()=>th.remove(),5000);
-  }
-  setInterval(()=>createTwinkleHearts(),3000);
-}
+// Animation functions
+function createHearts(){for(let i=0;i<20;i++){const h=document.createElement('div');h.classList.add('heart');h.style.left=Math.random()*100+'vw';h.style.animationDuration=(3+Math.random()*3)+'s';document.body.appendChild(h);setTimeout(()=>h.remove(),6000);}setInterval(createHearts,1500);}
+function createConfetti(){for(let i=0;i<50;i++){const c=document.createElement('div');c.classList.add('confetti');c.style.left=Math.random()*window.innerWidth+'px';c.style.background=`hsl(${Math.random()*360},100%,50%)`;c.style.animationDuration=(2+Math.random()*2)+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),4000);}}
+function createFlyingHearts(){for(let i=0;i<15;i++){const f=document.createElement('div');f.classList.add('flying-heart');f.style.left=yesBtn.offsetLeft+yesBtn.offsetWidth/2+'px';f.style.top=yesBtn.offsetTop+'px';f.textContent="💖";document.body.appendChild(f);setTimeout(()=>f.remove(),1500);}}
+function createTwinkleHearts(){for(let i=0;i<30;i++){const t=document.createElement('div');t.classList.add('twinkle-heart');t.style.left=Math.random()*window.innerWidth+'px';t.style.top=Math.random()*window.innerHeight+'px';t.style.fontSize=(10+Math.random()*20)+'px';document.body.appendChild(t);setTimeout(()=>t.remove(),5000);}setInterval(createTwinkleHearts,3000);}
 </script>
 </body>
 </html>
