@@ -9,23 +9,23 @@
 
   body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #fcb69f, #ffdde1);
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: url('4c2fe3f2-3420-4ce9-90cc-a61c2804e75b.png') center/cover no-repeat; /* Background: you both */
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
-    overflow: hidden;
     position: relative;
   }
 
   .card {
-    background: #8e4ca0;
+    background: rgba(142,76,160,0.9);
     border-radius: 20px;
     padding: 30px 20px;
     text-align: center;
     width: 350px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     color: #fff;
     transition: opacity 0.5s ease;
     z-index: 10;
@@ -38,6 +38,10 @@
     border-radius: 15px;
     margin: 15px 0;
   }
+
+  h1 { font-size: 22px; margin-bottom: 10px; }
+  h2 { font-size: 20px; }
+  p { font-size: 16px; margin: 10px 0 20px; }
 
   .btn {
     padding: 10px 25px;
@@ -81,6 +85,7 @@
 
   .twinkle-heart { position: absolute; font-size: 15px; color: pink; animation: twinkle 2s infinite; pointer-events: none; }
   @keyframes twinkle { 0%,100% { opacity:0.2; } 50% { opacity:1; } }
+
 </style>
 </head>
 <body>
@@ -89,7 +94,7 @@
 <div class="card" id="mainCard">
   <h1>Bhavya 💜</h1>
   <h2>Will you be my Valentine?</h2>
-  <img src="https://c.tenor.com/YzPqskV2mX8AAAAd/cat-sitting.gif" alt="Cute Cat">
+  <img src="81228a18-3af7-40c0-b7b9-71cb5c08826f.png" alt="Bhavya PC"> <!-- Bhavya on bike -->
   <p>Hehehe 😍🥳 <br>Bhavya, tum meri zindagi ki sabse pyaari si feeling ho 🥹 — Your Dudu 💕</p>
   <button class="btn btn-yes" id="yesBtn">Yes ✨</button>
   <button class="btn btn-no" id="noBtn">No 😅</button>
@@ -102,10 +107,11 @@
   <p>Har din tumhare saath ek nayi khushi hai… ❤️</p>
 </div>
 
-<!-- YouTube embedded Tu Hi Hai Aashiqui song -->
-<div id="player" style="display:none;">
-  <iframe width="0" height="0" src="https://www.youtube.com/embed/ooB-fTl-57U?autoplay=1&loop=1&playlist=ooB-fTl-57U" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
+<!-- Audio: Tu Hi Hai Aashiqui -->
+<audio id="loveMusic" autoplay>
+  <source src="https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3" type="audio/mpeg">
+  <!-- Replace above with actual Tu Hi Hai Aashiqui mp3 file path -->
+</audio>
 
 <!-- Dancing Cat -->
 <img src="https://c.tenor.com/YN5nD8oCPZ4AAAAC/dancing-cat.gif" class="dancing-cat" id="dancingCat" style="display:none;">
@@ -115,12 +121,12 @@ const yesBtn = document.getElementById('yesBtn');
 const noBtn = document.getElementById('noBtn');
 const card = document.getElementById('mainCard');
 const nextPage = document.getElementById('nextPage');
-const player = document.getElementById('player');
+const music = document.getElementById('loveMusic');
 const dancingCat = document.getElementById('dancingCat');
 
 yesBtn.addEventListener('click', () => {
   card.classList.add('fade');
-  player.style.display = 'block';  // play song
+  music.play(); // song starts immediately
   dancingCat.style.display = 'block';
   createHearts();
   createConfetti();
@@ -181,7 +187,6 @@ function createFlyingHearts(){
     fh.classList.add('flying-heart');
     fh.style.left=yesBtn.offsetLeft+yesBtn.offsetWidth/2+'px';
     fh.style.top=yesBtn.offsetTop+'px';
-    fh.style.setProperty('--rand-x',Math.random());
     fh.textContent="💖";
     document.body.appendChild(fh);
     setTimeout(()=>fh.remove(),1500);
