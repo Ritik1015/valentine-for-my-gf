@@ -2,202 +2,175 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Valentine Surprise 💜</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine Surprise</title>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  height: 100vh;
-  overflow: hidden;
-  background: url('4c2fe3f2-3420-4ce9-90cc-a61c2804e75b.png') center/cover no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  height:100vh;
+  font-family:'Poppins',sans-serif;
+  overflow:hidden;
+  background:
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+    url('https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80')
+    center/cover no-repeat;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-/* Overlay click to start */
-.overlay {
-  position: absolute;
-  top:0; left:0; width:100%; height:100%;
-  background: rgba(0,0,0,0.6);
-  display:flex; justify-content:center; align-items:center;
-  color:#fff; font-size:24px; text-align:center; cursor:pointer; z-index:20;
+/* ---------- CLICK OVERLAY ---------- */
+#overlay{
+  position:fixed;
+  inset:0;
+  background:#000;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:24px;
+  cursor:pointer;
+  z-index:999;
 }
 
-.card {
-  background: rgba(142,76,160,0.9);
-  border-radius: 20px;
-  padding: 30px 20px;
-  text-align: center;
-  width: 350px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  color: #fff;
-  transition: opacity 0.5s ease;
-  z-index: 10;
+/* ---------- CARD ---------- */
+.card{
+  background:rgba(150,80,170,.95);
+  width:350px;
+  padding:25px;
+  border-radius:20px;
+  text-align:center;
+  color:#fff;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
 }
 
-.fade { opacity: 0; }
-
-.card img {
-  width: 100%;
-  border-radius: 15px;
-  margin: 15px 0;
+.card img{
+  width:100%;
+  border-radius:15px;
+  margin:15px 0;
 }
 
-h1 { font-size: 22px; margin-bottom: 10px; }
-h2 { font-size: 20px; }
-p { font-size: 16px; margin: 10px 0 20px; }
-
-.btn {
-  padding: 10px 25px;
-  border-radius: 30px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  margin: 5px;
-  transition: all 0.3s ease;
-  position: relative;
+button{
+  padding:10px 25px;
+  border-radius:30px;
+  border:none;
+  font-size:16px;
+  margin:5px;
+  cursor:pointer;
 }
 
-.btn-yes { background: #ff6584; color: #fff; }
-.btn-no { background: #fff; color: #8e4ca0; }
-.btn:disabled { background: #ccc; cursor: not-allowed; }
+.yes{background:#ff5f8d;color:#fff}
+.no{background:#fff;color:#8e4ca0}
 
-.next-page {
-  display: none;
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(135deg, rgba(142,76,160,0.95), rgba(255,105,180,0.95));
-  text-align: center;
-  color: #ffe4e1;
-  padding-top: 100px;
-  z-index: 10;
+/* ---------- SECOND PAGE ---------- */
+#second{
+  position:fixed;
+  inset:0;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:
+    linear-gradient(135deg,#8e4ca0,#ff6fa5);
+  color:#fff;
+  padding:30px;
 }
-.next-page.show { display: block; }
 
-.next-page h2 { font-size: 28px; margin-bottom: 20px; color: #fff; }
-.next-page p { font-size: 20px; margin: 10px 0; color: #ffe4e1; }
+#second h2{font-size:30px}
+#second p{font-size:20px;max-width:600px}
 
-.dancing-cat {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  animation: bounce 1s infinite alternate ease-in-out;
+/* ---------- HEARTS (LIMITED) ---------- */
+.heart{
+  position:absolute;
+  font-size:20px;
+  animation:float 4s linear forwards;
 }
-@keyframes bounce { from { transform: translate(-50%, 0); } to { transform: translate(-50%, -15px); } }
 
-.heart { position: absolute; width: 20px; height: 20px; background: red; transform: rotate(-45deg); animation: float 4s linear forwards; pointer-events: none; z-index: 1; }
-.heart::before, .heart::after { content: ''; position: absolute; width: 20px; height: 20px; background: red; border-radius: 50%; }
-.heart::before { top: -10px; left: 0; }
-.heart::after { left: 10px; top: 0; }
-@keyframes float { 0% { opacity:1; } 100% { transform: translateY(-100vh) rotate(-45deg); opacity:0; } }
-
-.confetti { position: absolute; width: 10px; height: 10px; opacity: 0.9; pointer-events: none; animation: confetti-fall 3s linear forwards; border-radius: 50%; }
-@keyframes confetti-fall { 100% { transform: translateY(100vh) rotate(360deg); opacity:0; } }
-
-.flying-heart { position: absolute; font-size: 20px; animation: fly 1.5s ease-out forwards; pointer-events: none; z-index: 5; }
-@keyframes fly { 100% { opacity:0; transform: translateY(-150px) scale(1.5); } }
-
-.twinkle-heart { position: absolute; font-size: 15px; color: pink; animation: twinkle 2s infinite; pointer-events: none; }
-@keyframes twinkle { 0%,100% { opacity:0.2; } 50% { opacity:1; } }
+@keyframes float{
+  from{transform:translateY(0);opacity:1}
+  to{transform:translateY(-120vh);opacity:0}
+}
 </style>
 </head>
+
 <body>
 
-<div class="overlay" id="overlay">Click anywhere to start your Valentine surprise 💖</div>
+<!-- CLICK TO START -->
+<div id="overlay">Click anywhere to start 💖</div>
 
-<div class="card" id="mainCard">
-  <h1>Bhavya 💜</h1>
-  <h2>Will you be my Valentine?</h2>
-  <img src="https://images.unsplash.com/photo-1556782377-1c0fa5ed6cf0?auto=format&fit=crop&w=500&q=80" alt="Valentine Proposal">
-  <p>Hehehe 😍🥳 <br>Bhavya, tum meri zindagi ki sabse pyaari si feeling ho 🥹 — Your Dudu 💕</p>
-  <button class="btn btn-yes" id="yesBtn">Yes ✨</button>
-  <button class="btn btn-no" id="noBtn">No 😅</button>
+<!-- PAGE 1 -->
+<div class="card" id="card">
+  <h2>Bhavya 💜</h2>
+  <h3>Will you be my Valentine?</h3>
+
+  <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=600&q=80">
+
+  <p>
+    Bhavya, tum meri zindagi ki sabse pyaari feeling ho 🥹💞  
+  </p>
+
+  <button class="yes" id="yes">Yes ✨</button>
+  <button class="no" id="no">No 😅</button>
 </div>
 
-<div class="next-page" id="nextPage">
-  <h2>Yay! 💖</h2>
-  <p>Bhavya, tum meri zindagi ka sabse khoobsurat hissa ho 😘💜</p>
-  <p>Har din tumhare saath ek nayi khushi hai… ❤️</p>
+<!-- PAGE 2 -->
+<div id="second">
+  <h2>Yayyy 💖</h2>
+  <p>
+    Bhavya, tum meri zindagi ka sabse khoobsurat hissa ho 😘💜<br><br>
+    <b>Mai hmare relation ko bhot zyada beautiful bnana chahta hu ❤️</b><br><br>
+    Har din tumhare saath ek nayi khushi hai…
+  </p>
 </div>
 
-<audio id="loveMusic" preload="auto" loop>
-  <source src="https://anytourl.com/s/78758128207718960?v=<?=Date.now()?>" type="audio/mpeg">
+<!-- AUDIO -->
+<audio id="music" preload="auto">
+  <source src="https://docs.google.com/uc?export=download&id=1dPuJ7WNdp7v-i_LoaHmk2F2ItOsJld5N" type="audio/mpeg">
 </audio>
 
-<img src="https://c.tenor.com/YN5nD8oCPZ4AAAAC/dancing-cat.gif" class="dancing-cat" id="dancingCat" style="display:none;">
-
 <script>
-const overlay = document.getElementById('overlay');
-const yesBtn = document.getElementById('yesBtn');
-const noBtn = document.getElementById('noBtn');
-const card = document.getElementById('mainCard');
-const nextPage = document.getElementById('nextPage');
-const music = document.getElementById('loveMusic');
-const dancingCat = document.getElementById('dancingCat');
+const overlay = document.getElementById("overlay");
+const music   = document.getElementById("music");
+const yesBtn  = document.getElementById("yes");
+const card    = document.getElementById("card");
+const second  = document.getElementById("second");
 
-// Start music on overlay click
-overlay.addEventListener('click', () => {
-  overlay.style.display = 'none';
-  music.volume = 0;
-  music.play().catch(()=>console.log("Click again to start music"));
-  let step = 0.05;
-  let fadeIn = setInterval(()=>{
-    if(music.volume < 1) music.volume = Math.min(music.volume + step, 1);
-    else clearInterval(fadeIn);
-  },100);
-});
+/* CLICK TO START MUSIC (100% REQUIRED) */
+overlay.onclick = () => {
+  overlay.style.display="none";
+  music.play();
+};
 
-// Fade out music function
-function fadeOutAudio(audio, duration=2000){
-  let step = 0.05;
-  let interval = duration*step;
-  let fade = setInterval(()=>{
-    if(audio.volume > 0) audio.volume = Math.max(audio.volume - step,0);
-    else { audio.pause(); clearInterval(fade);}
-  }, interval);
+/* YES CLICK */
+yesBtn.onclick = () => {
+  card.style.display="none";
+  second.style.display="flex";
+  spawnHearts();
+};
+
+/* LIMITED HEARTS (NO LAG) */
+function spawnHearts(){
+  let count = 0;
+  const interval = setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.textContent="💖";
+    h.style.left=Math.random()*100+"vw";
+    h.style.bottom="-20px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+    count++;
+    if(count>20) clearInterval(interval);
+  },300);
 }
-
-// YES button click
-yesBtn.addEventListener('click', () => {
-  card.classList.add('fade');
-  dancingCat.style.display = 'block';
-  createHearts();
-  createConfetti();
-  createFlyingHearts();
-  createTwinkleHearts();
-
-  setTimeout(()=>{fadeOutAudio(music,3000);},20000);
-  setTimeout(() => { card.style.display = 'none'; nextPage.classList.add('show'); }, 500);
-});
-
-// NO button
-let noClickCount = 0;
-noBtn.addEventListener('click', () => {
-  noClickCount++;
-  if (noClickCount === 1) noBtn.textContent = "Are you sure?";
-  else if (noClickCount === 2) noBtn.textContent = "Think again!";
-  else if (noClickCount === 3) noBtn.textContent = "Nope!!", noBtn.disabled = true;
-});
-noBtn.addEventListener('mouseenter', () => {
-  if (!noBtn.disabled) {
-    const x = Math.random()*150-75;
-    const y = Math.random()*150-75;
-    noBtn.style.transform = `translate(${x}px, ${y}px)`;
-  }
-});
-
-// Animations optimized
-function createHearts(){for(let i=0;i<8;i++){const h=document.createElement('div');h.classList.add('heart');h.style.left=Math.random()*100+'vw';h.style.animationDuration=(3+Math.random()*2)+'s';document.body.appendChild(h);setTimeout(()=>h.remove(),6000);}setInterval(createHearts,2500);}
-function createConfetti(){for(let i=0;i<15;i++){const c=document.createElement('div');c.classList.add('confetti');c.style.left=Math.random()*window.innerWidth+'px';c.style.background=`hsl(${Math.random()*360},100%,50%)`;c.style.animationDuration=(2+Math.random()*2)+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),4000);}}
-function createFlyingHearts(){for(let i=0;i<8;i++){const f=document.createElement('div');f.classList.add('flying-heart');f.style.left=yesBtn.offsetLeft+yesBtn.offsetWidth/2+'px';f.style.top=yesBtn.offsetTop+'px';f.textContent="💖";document.body.appendChild(f);setTimeout(()=>f.remove(),1500);}}
-function createTwinkleHearts(){for(let i=0;i<12;i++){const t=document.createElement('div');t.classList.add('twinkle-heart');t.style.left=Math.random()*window.innerWidth+'px';t.style.top=Math.random()*window.innerHeight+'px';t.style.fontSize=(10+Math.random()*15)+'px';document.body.appendChild(t);setTimeout(()=>t.remove(),5000);}setInterval(createTwinkleHearts,4000);}
 </script>
+
 </body>
 </html>
