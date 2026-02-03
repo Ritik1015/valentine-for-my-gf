@@ -2,53 +2,42 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Valentine Surprise 💜</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Surprise 💜</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-*{box-sizing:border-box}
+*{box-sizing:border-box;}
 
 body{
   margin:0;
   height:100vh;
   font-family:'Poppins',sans-serif;
-  overflow:hidden;
   background:
-    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
-    url('https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80')
-    center/cover no-repeat;
+    linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
+    url("https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e");
+  background-size:cover;
+  background-position:center;
   display:flex;
   justify-content:center;
   align-items:center;
+  overflow:hidden;
+  color:white;
 }
 
-/* ---------- CLICK OVERLAY ---------- */
-#overlay{
-  position:fixed;
-  inset:0;
-  background:#000;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  font-size:24px;
-  cursor:pointer;
-  z-index:999;
-}
-
-/* ---------- CARD ---------- */
+/* Card */
 .card{
-  background:rgba(150,80,170,.95);
-  width:350px;
+  background:rgba(156,89,209,0.9);
   padding:25px;
   border-radius:20px;
+  width:340px;
   text-align:center;
-  color:#fff;
-  box-shadow:0 10px 30px rgba(0,0,0,.4);
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  transition:opacity 0.4s ease;
+  z-index:10;
 }
+.card.fade{opacity:0;}
 
 .card img{
   width:100%;
@@ -56,119 +45,157 @@ body{
   margin:15px 0;
 }
 
+h1{font-size:22px;margin:5px 0;}
+p{font-size:15px;}
+
 button{
   padding:10px 25px;
-  border-radius:30px;
   border:none;
+  border-radius:30px;
   font-size:16px;
-  margin:5px;
+  margin:8px;
   cursor:pointer;
+  transition:0.3s;
 }
 
-.yes{background:#ff5f8d;color:#fff}
-.no{background:#fff;color:#8e4ca0}
+#yesBtn{
+  background:#ff4f81;
+  color:white;
+}
+#noBtn{
+  background:white;
+  color:#9c59d1;
+}
 
-/* ---------- SECOND PAGE ---------- */
-#second{
-  position:fixed;
-  inset:0;
+#noBtn:disabled{
+  background:#ccc;
+  color:#666;
+  cursor:not-allowed;
+}
+
+/* Next Page */
+.next{
   display:none;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
   text-align:center;
   background:
-    linear-gradient(135deg,#8e4ca0,#ff6fa5);
-  color:#fff;
-  padding:30px;
+    linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
+    url("https://images.unsplash.com/photo-1517841905240-472988babdf9");
+  background-size:cover;
+  background-position:center;
+  position:absolute;
+  inset:0;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
 }
 
-#second h2{font-size:30px}
-#second p{font-size:20px;max-width:600px}
+.next.show{
+  display:flex;
+}
 
-/* ---------- HEARTS (LIMITED) ---------- */
+.next-box{
+  background:rgba(255,105,180,0.85);
+  padding:25px;
+  border-radius:20px;
+  max-width:350px;
+}
+
+/* Hearts (limited for performance) */
 .heart{
   position:absolute;
-  font-size:20px;
+  font-size:18px;
   animation:float 4s linear forwards;
+  pointer-events:none;
 }
 
 @keyframes float{
-  from{transform:translateY(0);opacity:1}
-  to{transform:translateY(-120vh);opacity:0}
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-120vh);opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<!-- CLICK TO START -->
-<div id="overlay">Click anywhere to start 💖</div>
-
-<!-- PAGE 1 -->
+<!-- MAIN CARD -->
 <div class="card" id="card">
-  <h2>Bhavya 💜</h2>
-  <h3>Will you be my Valentine?</h3>
+  <h1>Hey 💜</h1>
+  <p>Ek sawal hai dil se…</p>
 
-  <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=600&q=80">
+  <!-- Romantic proposing image -->
+  <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e" alt="proposal">
 
-  <p>
-    Bhavya, tum meri zindagi ki sabse pyaari feeling ho 🥹💞  
-  </p>
+  <p>Will you be my Valentine? 💍</p>
 
-  <button class="yes" id="yes">Yes ✨</button>
-  <button class="no" id="no">No 😅</button>
+  <button id="yesBtn">Yes 💖</button>
+  <button id="noBtn">No 🙈</button>
 </div>
 
-<!-- PAGE 2 -->
-<div id="second">
-  <h2>Yayyy 💖</h2>
-  <p>
-    Bhavya, tum meri zindagi ka sabse khoobsurat hissa ho 😘💜<br><br>
-    <b>Mai hmare relation ko bhot zyada beautiful bnana chahta hu ❤️</b><br><br>
-    Har din tumhare saath ek nayi khushi hai…
-  </p>
+<!-- NEXT PAGE -->
+<div class="next" id="next">
+  <div class="next-box">
+    <h2>Yayyy 💞</h2>
+    <p>
+      Tum meri zindagi ka sabse khoobsurat hissa ho ❤️<br><br>
+      <b>Mai hmare relation ko bhot zyada beautiful bnana chahta hu</b> 🥹💜
+    </p>
+  </div>
 </div>
 
 <!-- AUDIO -->
-<audio id="music" preload="auto">
-  <source src="https://docs.google.com/uc?export=download&id=1dPuJ7WNdp7v-i_LoaHmk2F2ItOsJld5N" type="audio/mpeg">
+<audio id="song" preload="auto">
+  <source src="https://raw.githubusercontent.com/Ritik1015/valentine-song/main/Tu%20Hi%20Hai%20Aashiqui-Downringtone.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-const overlay = document.getElementById("overlay");
-const music   = document.getElementById("music");
-const yesBtn  = document.getElementById("yes");
-const card    = document.getElementById("card");
-const second  = document.getElementById("second");
-
-/* CLICK TO START MUSIC (100% REQUIRED) */
-overlay.onclick = () => {
-  overlay.style.display="none";
-  music.play();
-};
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const card=document.getElementById("card");
+const next=document.getElementById("next");
+const song=document.getElementById("song");
 
 /* YES CLICK */
-yesBtn.onclick = () => {
-  card.style.display="none";
-  second.style.display="flex";
-  spawnHearts();
+yesBtn.onclick=()=>{
+  song.play().catch(()=>{});
+  card.classList.add("fade");
+  heartsBurst();
+  setTimeout(()=>{
+    card.style.display="none";
+    next.classList.add("show");
+  },400);
 };
 
-/* LIMITED HEARTS (NO LAG) */
-function spawnHearts(){
-  let count = 0;
-  const interval = setInterval(()=>{
+/* NO BUTTON LOGIC */
+let count=0;
+noBtn.onclick=()=>{
+  count++;
+  if(count===1) noBtn.innerText="Are you sure?";
+  else if(count===2) noBtn.innerText="Think again!";
+  else if(count===3){
+    noBtn.innerText="Nope!!";
+    noBtn.disabled=true;
+  }
+};
+
+/* Dodge effect */
+noBtn.onmouseenter=()=>{
+  if(noBtn.disabled) return;
+  const x=Math.random()*120-60;
+  const y=Math.random()*120-60;
+  noBtn.style.transform=`translate(${x}px,${y}px)`;
+};
+
+/* Hearts */
+function heartsBurst(){
+  for(let i=0;i<15;i++){
     const h=document.createElement("div");
     h.className="heart";
-    h.textContent="💖";
+    h.innerText="💖";
     h.style.left=Math.random()*100+"vw";
-    h.style.bottom="-20px";
+    h.style.bottom="0";
     document.body.appendChild(h);
     setTimeout(()=>h.remove(),4000);
-    count++;
-    if(count>20) clearInterval(interval);
-  },300);
+  }
 }
 </script>
 
