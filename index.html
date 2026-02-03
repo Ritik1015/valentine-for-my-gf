@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine Surprise 💜</title>
+<title>Valentine Proposal 💜</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
@@ -26,14 +26,14 @@ body{
   color:white;
 }
 
-/* Card */
+/* Proposal Card */
 .card{
-  background:rgba(156,89,209,0.9);
-  padding:25px;
-  border-radius:20px;
+  background:rgba(156,89,209,0.92);
+  padding:26px;
+  border-radius:22px;
   width:340px;
   text-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  box-shadow:0 10px 35px rgba(0,0,0,0.5);
   transition:opacity 0.4s ease;
   z-index:10;
 }
@@ -41,19 +41,33 @@ body{
 
 .card img{
   width:100%;
-  border-radius:15px;
+  border-radius:18px;
   margin:15px 0;
 }
 
-h1{font-size:22px;margin:5px 0;}
-p{font-size:15px;}
+h1{
+  font-size:22px;
+  margin:6px 0;
+}
 
+p{
+  font-size:15px;
+  margin:6px 0;
+}
+
+.from{
+  font-size:13px;
+  opacity:0.85;
+  letter-spacing:1px;
+}
+
+/* Buttons */
 button{
-  padding:10px 25px;
+  padding:10px 26px;
   border:none;
   border-radius:30px;
   font-size:16px;
-  margin:8px;
+  margin:10px 6px;
   cursor:pointer;
   transition:0.3s;
 }
@@ -73,20 +87,18 @@ button{
   cursor:not-allowed;
 }
 
-/* Next Page */
+/* Second Page */
 .next{
   display:none;
-  text-align:center;
+  position:absolute;
+  inset:0;
   background:
     linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
     url("https://images.unsplash.com/photo-1517841905240-472988babdf9");
   background-size:cover;
   background-position:center;
-  position:absolute;
-  inset:0;
   justify-content:center;
   align-items:center;
-  flex-direction:column;
 }
 
 .next.show{
@@ -94,13 +106,14 @@ button{
 }
 
 .next-box{
-  background:rgba(255,105,180,0.85);
-  padding:25px;
-  border-radius:20px;
+  background:rgba(255,105,180,0.88);
+  padding:28px;
+  border-radius:22px;
   max-width:350px;
+  text-align:center;
 }
 
-/* Hearts (limited for performance) */
+/* Hearts */
 .heart{
   position:absolute;
   font-size:18px;
@@ -117,13 +130,13 @@ button{
 
 <body>
 
-<!-- MAIN CARD -->
+<!-- FIRST PAGE -->
 <div class="card" id="card">
   <h1>Hey 💜</h1>
-  <p>Bhavya 🌸</p>
 
+  <p><b>Bhavya 💜</b></p>
+  <p class="from">From Dudu 💞</p>
 
-  <!-- Romantic proposing image -->
   <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e" alt="proposal">
 
   <p>Will you be my Valentine? 💍</p>
@@ -132,7 +145,7 @@ button{
   <button id="noBtn">No 🙈</button>
 </div>
 
-<!-- NEXT PAGE -->
+<!-- SECOND PAGE -->
 <div class="next" id="next">
   <div class="next-box">
     <h2>Yayyy 💞</h2>
@@ -143,7 +156,7 @@ button{
   </div>
 </div>
 
-<!-- AUDIO -->
+<!-- SONG -->
 <audio id="song" preload="auto">
   <source src="https://raw.githubusercontent.com/Ritik1015/valentine-song/main/Tu%20Hi%20Hai%20Aashiqui-Downringtone.mp3" type="audio/mpeg">
 </audio>
@@ -155,18 +168,18 @@ const card=document.getElementById("card");
 const next=document.getElementById("next");
 const song=document.getElementById("song");
 
-/* YES CLICK */
+/* YES */
 yesBtn.onclick=()=>{
   song.play().catch(()=>{});
   card.classList.add("fade");
-  heartsBurst();
+  hearts();
   setTimeout(()=>{
     card.style.display="none";
     next.classList.add("show");
   },400);
 };
 
-/* NO BUTTON LOGIC */
+/* NO button logic */
 let count=0;
 noBtn.onclick=()=>{
   count++;
@@ -178,7 +191,7 @@ noBtn.onclick=()=>{
   }
 };
 
-/* Dodge effect */
+/* Dodge */
 noBtn.onmouseenter=()=>{
   if(noBtn.disabled) return;
   const x=Math.random()*120-60;
@@ -186,9 +199,9 @@ noBtn.onmouseenter=()=>{
   noBtn.style.transform=`translate(${x}px,${y}px)`;
 };
 
-/* Hearts */
-function heartsBurst(){
-  for(let i=0;i<15;i++){
+/* Hearts effect */
+function hearts(){
+  for(let i=0;i<14;i++){
     const h=document.createElement("div");
     h.className="heart";
     h.innerText="💖";
