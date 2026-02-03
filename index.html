@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Valentine Surprise</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
   body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #fcb69f, #ffdde1);
@@ -13,6 +15,8 @@
     align-items: center;
     height: 100vh;
     margin: 0;
+    overflow: hidden;
+    position: relative;
   }
 
   .card {
@@ -23,6 +27,12 @@
     width: 350px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     color: #fff;
+    transition: opacity 0.5s ease;
+    z-index: 1;
+  }
+
+  .fade {
+    opacity: 0;
   }
 
   .card img {
@@ -34,6 +44,10 @@
   h1 {
     font-size: 22px;
     margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 20px;
   }
 
   p {
@@ -49,6 +63,7 @@
     cursor: pointer;
     margin: 5px;
     transition: all 0.3s ease;
+    position: relative;
   }
 
   .btn-yes {
@@ -70,6 +85,14 @@
     display: none;
     text-align: center;
     color: #fff;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 2;
+  }
+
+  .next-page.show {
+    display: block;
+    opacity: 1;
   }
 
   .next-page h2 {
@@ -80,6 +103,76 @@
   .next-page p {
     font-size: 18px;
   }
+
+  /* Floating hearts */
+  .heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    transform: rotate(-45deg);
+    left: 50%;
+    top: 50%;
+    animation: float 4s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .heart::before,
+  .heart::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    border-radius: 50%;
+  }
+
+  .heart::before {
+    top: -10px;
+    left: 0;
+  }
+
+  .heart::after {
+    left: 10px;
+    top: 0;
+  }
+
+  @keyframes float {
+    0% { transform: translate(0,0) rotate(-45deg); opacity:1; }
+    100% { transform: translate(calc(-50vw + 50px), -100vh) rotate(-45deg); opacity:0; }
+  }
+
+  /* Confetti */
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #fffc00;
+    opacity: 0.9;
+    pointer-events: none;
+    animation: confetti-fall 3s linear forwards;
+    border-radius: 50%;
+  }
+
+  @keyframes confetti-fall {
+    0% { transform: translateY(0) rotate(0deg); opacity:1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity:0; }
+  }
+
+  /* Flying heart emojis from Yes button */
+  .flying-heart {
+    position: absolute;
+    font-size: 20px;
+    animation: fly 1.5s ease-out forwards;
+    pointer-events: none;
+  }
+
+  @keyframes fly {
+    0% { transform: translate(0,0) scale(1); opacity:1; }
+    100% { transform: translate(calc(-50px + 100px * var(--rand-x)), -150px) scale(1.5); opacity:0; }
+  }
+
 </style>
 </head>
 <body>
@@ -105,11 +198,19 @@
   const card = document.getElementById('mainCard');
   const nextPage = document.getElementById('nextPage');
 
+  // YES button click
   yesBtn.addEventListener('click', () => {
-    card.style.display = 'none';
-    nextPage.style.display = 'block';
+    card.classList.add('fade');
+    createFlyingHearts();
+    createHearts();
+    createConfetti();
+    setTimeout(() => {
+      card.style.display = 'none';
+      nextPage.classList.add('show');
+    }, 500);
   });
 
+  // NO button playful behavior
   let noClickCount = 0;
   noBtn.addEventListener('click', () => {
     noClickCount++;
@@ -122,6 +223,56 @@
       noBtn.disabled = true;
     }
   });
+
+  // NO button dodge effect
+  noBtn.addEventListener('mouseenter', () => {
+    if(!noBtn.disabled){
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 200 - 100;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+  });
+
+  // Floating hearts
+  function createHearts(){
+    for(let i=0;i<20;i++){
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(() => createHearts(), 1500);
+  }
+
+  // Confetti
+  function createConfetti(){
+    for(let i=0;i<50;i++){
+      const conf = document.createElement('div');
+      conf.classList.add('confetti');
+      conf.style.left = Math.random() * window.innerWidth + 'px';
+      conf.style.background = `hsl(${Math.random()*360}, 100%, 50%)`;
+      conf.style.animationDuration = (2 + Math.random()*2) + 's';
+      document.body.appendChild(conf);
+      setTimeout(() => conf.remove(), 4000);
+    }
+  }
+
+  // Flying hearts from YES button
+  function createFlyingHearts(){
+    for(let i=0;i<15;i++){
+      const fh = document.createElement('div');
+      fh.classList.add('flying-heart');
+      fh.style.left = yesBtn.offsetLeft + yesBtn.offsetWidth/2 + 'px';
+      fh.style.top = yesBtn.offsetTop + 'px';
+      fh.style.setProperty('--rand-x', Math.random());
+      fh.textContent = "💖";
+      document.body.appendChild(fh);
+      setTimeout(() => fh.remove(), 1500);
+    }
+  }
+
 </script>
 
 </body>
