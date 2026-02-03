@@ -12,7 +12,7 @@
     margin: 0;
     height: 100vh;
     overflow: hidden;
-    background: url('4c2fe3f2-3420-4ce9-90cc-a61c2804e75b.png') center/cover no-repeat; /* Background: you both */
+    background: url('4c2fe3f2-3420-4ce9-90cc-a61c2804e75b.png') center/cover no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,8 +58,26 @@
   .btn-no { background: #fff; color: #8e4ca0; }
   .btn:disabled { background: #ccc; cursor: not-allowed; }
 
-  .next-page { display: none; text-align: center; color: #fff; opacity: 0; transition: opacity 0.5s ease; z-index: 10; }
+  .next-page {
+    display: none;
+    text-align: center;
+    color: #ffb6c1; 
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 10;
+    background: rgba(142,76,160,0.8);
+    padding: 40px;
+    border-radius: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  }
   .next-page.show { display: block; opacity: 1; }
+  .next-page h2 { font-size: 26px; margin-bottom: 15px; color: #ff69b4; }
+  .next-page p { font-size: 18px; margin: 10px 0; color: #ffe4e1; }
 
   .dancing-cat {
     position: absolute;
@@ -90,30 +108,26 @@
 </head>
 <body>
 
-<!-- Main Card -->
 <div class="card" id="mainCard">
   <h1>Bhavya 💜</h1>
   <h2>Will you be my Valentine?</h2>
-  <img src="81228a18-3af7-40c0-b7b9-71cb5c08826f.png" alt="Bhavya PC"> <!-- Bhavya on bike -->
+  <img src="https://images.unsplash.com/photo-1556782377-1c0fa5ed6cf0?auto=format&fit=crop&w=500&q=80" alt="Valentine Proposal">
   <p>Hehehe 😍🥳 <br>Bhavya, tum meri zindagi ki sabse pyaari si feeling ho 🥹 — Your Dudu 💕</p>
   <button class="btn btn-yes" id="yesBtn">Yes ✨</button>
   <button class="btn btn-no" id="noBtn">No 😅</button>
 </div>
 
-<!-- Next Romantic Message -->
 <div class="next-page" id="nextPage">
   <h2>Yay! 💖</h2>
   <p>Bhavya, tum meri zindagi ka sabse khoobsurat hissa ho 😘💜</p>
   <p>Har din tumhare saath ek nayi khushi hai… ❤️</p>
 </div>
 
-<!-- Audio: Tu Hi Hai Aashiqui -->
-<audio id="loveMusic" autoplay>
-  <source src="https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3" type="audio/mpeg">
-  <!-- Replace above with actual Tu Hi Hai Aashiqui mp3 file path -->
+<!-- 🎧 Romantic Song Audio -->
+<audio id="loveMusic" preload="auto">
+  <source src="https://anytourl.com/s/78758128207718960" type="audio/mpeg">
 </audio>
 
-<!-- Dancing Cat -->
 <img src="https://c.tenor.com/YN5nD8oCPZ4AAAAC/dancing-cat.gif" class="dancing-cat" id="dancingCat" style="display:none;">
 
 <script>
@@ -125,20 +139,22 @@ const music = document.getElementById('loveMusic');
 const dancingCat = document.getElementById('dancingCat');
 
 yesBtn.addEventListener('click', () => {
+  music.currentTime = 0;   // start from beginning
+  music.play();            // instantly play romantic song
   card.classList.add('fade');
-  music.play(); // song starts immediately
   dancingCat.style.display = 'block';
   createHearts();
   createConfetti();
   createFlyingHearts();
   createTwinkleHearts();
+
   setTimeout(() => {
     card.style.display = 'none';
     nextPage.classList.add('show');
+    createHearts(); 
   }, 500);
 });
 
-// NO button dodge and text changes
 let noClickCount = 0;
 noBtn.addEventListener('click', () => {
   noClickCount++;
@@ -154,7 +170,6 @@ noBtn.addEventListener('mouseenter', () => {
   }
 });
 
-// Floating hearts
 function createHearts(){
   for(let i=0;i<20;i++){
     const heart=document.createElement('div');
@@ -167,7 +182,6 @@ function createHearts(){
   setInterval(()=>createHearts(),1500);
 }
 
-// Confetti
 function createConfetti(){
   for(let i=0;i<50;i++){
     const conf=document.createElement('div');
@@ -180,7 +194,6 @@ function createConfetti(){
   }
 }
 
-// Flying hearts
 function createFlyingHearts(){
   for(let i=0;i<15;i++){
     const fh=document.createElement('div');
@@ -193,7 +206,6 @@ function createFlyingHearts(){
   }
 }
 
-// Twinkling hearts
 function createTwinkleHearts(){
   for(let i=0;i<30;i++){
     const th=document.createElement('div');
@@ -207,6 +219,5 @@ function createTwinkleHearts(){
   setInterval(()=>createTwinkleHearts(),3000);
 }
 </script>
-
 </body>
 </html>
